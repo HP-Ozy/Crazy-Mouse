@@ -21,7 +21,7 @@ pip install pyautogui keyboard
 
 ## Avvio
 ```
-python mouse_impazzito.py
+python cmouse.py
 ```
 ## Come si ferma?
 **CTRL + SHIFT + Q**
