@@ -23,12 +23,8 @@ pip install pyautogui keyboard
 ```
 python mouse_impazzito.py
 ```
-Avvialo e minimizza il terminale. Nessuno deve vedere.
-
 ## Come si ferma?
 **CTRL + SHIFT + Q**
-
-Imparatelo bene perché il mouse vi rema contro mentre provate a chiuderlo. Sì, fa parte del divertimento.
 
 ## Vuoi l'exe?
 ```
