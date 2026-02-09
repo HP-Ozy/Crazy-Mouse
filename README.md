@@ -12,7 +12,7 @@ Il prof di storia sta spiegando la Rivoluzione Francese col proiettore? Il prof 
 Questo scriptino fa impazzire il mouse del PC: si muove da solo, in direzioni casuali, con tempi randomici. Sembra un problema del computer. Il prof non capirà mai cosa sta succedendo.
 
 ## Come funziona?
-Lo avvii e il mouse inizia a vivere di vita propria. Si sposta a caso, a volte piano, a volte veloce. Il prof proverà a cliccare sulle slide e il cursore scapperà via. Panico in cattedra garantito.
+Lo avvii e il mouse inizia a vivere di vita propria. Si sposta a caso, a volte piano, a volte veloce. Il prof proverà a cliccare sulle slide e il cursore scapperà via.
 
 ## Installazione
 ```
@@ -30,18 +30,10 @@ Avvialo e minimizza il terminale. Nessuno deve vedere.
 
 Imparatelo bene perché il mouse vi rema contro mentre provate a chiuderlo. Sì, fa parte del divertimento.
 
-## Consigli tattici
-- Avviatelo **prima** che il prof arrivi, poi minimizzate tutto
-- Funziona meglio col **proiettore acceso** — tutta la classe vede il cursore impazzito
-- Se il prof chiama il tecnico, avete già vinto
-- Rimuovetelo prima che qualcuno controlli il PC
-
 ## Vuoi l'exe?
 ```
 pip install pyinstaller
 pyinstaller --onefile --noconsole mouse_impazzito.py
 ```
-Mettilo su chiavetta, avvialo dal PC della cattedra, togli la chiavetta. Zero tracce.
-
 ---
 Se il prof vi becca, io non c'entro niente ⚠️
