@@ -35,14 +35,13 @@ Write-Host ""
 
 $random = New-Object System.Random
 
-# Dimensioni schermo per teletrasporto
 $screenW = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
 $screenH = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Height
 
 $tick = 0
 
 while ($true) {
-    # Controlla CTRL+SHIFT+Q
+    
     $ctrl  = [KeyCheck]::GetAsyncKeyState(0x11) -band 0x8000
     $shift = [KeyCheck]::GetAsyncKeyState(0x10) -band 0x8000
     $q     = [KeyCheck]::GetAsyncKeyState(0x51) -band 0x8000
@@ -54,7 +53,7 @@ while ($true) {
     $pos = [System.Windows.Forms.Cursor]::Position
     $tick++
 
-    # Scegli un comportamento casuale per massimo caos
+    
     $mode = $random.Next(0, 100)
 
     if ($mode -lt 40) {
@@ -110,7 +109,7 @@ while ($true) {
         [System.Windows.Forms.Cursor]::Position = $target
     }
     else {
-        # RAFFICA - tanti micro-movimenti velocissimi
+        
         for ($i = 0; $i -lt 25; $i++) {
             $pos = [System.Windows.Forms.Cursor]::Position
             $dx = $random.Next(-150, 151)
@@ -122,7 +121,7 @@ while ($true) {
         }
     }
 
-    # Pausa brevissima tra le azioni (quasi nulla)
+    
     Start-Sleep -Milliseconds $random.Next(5, 80)
 }
 
