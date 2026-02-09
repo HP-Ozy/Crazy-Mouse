@@ -1,0 +1,133 @@
+# ============================================
+#  CRAZY MOUSE EXTREME EDITION
+#  Il mouse e' COMPLETAMENTE impazzito.
+#  CTRL+SHIFT+Q per fermarlo (se ci riesci...)
+# ============================================
+
+Add-Type -AssemblyName System.Windows.Forms
+
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public class KeyCheck {
+    [DllImport("user32.dll")]
+    public static extern short GetAsyncKeyState(int vKey);
+}
+"@
+
+Write-Host ""
+Write-Host "========================================" -ForegroundColor Red
+Write-Host "    CRAZY MOUSE EXTREME EDITION    " -ForegroundColor Red
+Write-Host "========================================" -ForegroundColor Red
+Write-Host "  Il tuo mouse non ti appartiene piu'." -ForegroundColor DarkRed
+Write-Host "  CTRL+SHIFT+Q per fermarlo...         " -ForegroundColor Yellow
+Write-Host "  ...se ci riesci.                     " -ForegroundColor DarkYellow
+Write-Host "========================================" -ForegroundColor Red
+Write-Host ""
+Write-Host "Partenza tra 3..." -ForegroundColor White
+Start-Sleep -Seconds 1
+Write-Host "2..." -ForegroundColor Yellow
+Start-Sleep -Seconds 1
+Write-Host "1..." -ForegroundColor Red
+Start-Sleep -Seconds 1
+Write-Host "VIA! BUONA FORTUNA!" -ForegroundColor Red
+Write-Host ""
+
+$random = New-Object System.Random
+
+# Dimensioni schermo per teletrasporto
+$screenW = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
+$screenH = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Height
+
+$tick = 0
+
+while ($true) {
+    # Controlla CTRL+SHIFT+Q
+    $ctrl  = [KeyCheck]::GetAsyncKeyState(0x11) -band 0x8000
+    $shift = [KeyCheck]::GetAsyncKeyState(0x10) -band 0x8000
+    $q     = [KeyCheck]::GetAsyncKeyState(0x51) -band 0x8000
+
+    if ($ctrl -and $shift -and $q) {
+        break
+    }
+
+    $pos = [System.Windows.Forms.Cursor]::Position
+    $tick++
+
+    # Scegli un comportamento casuale per massimo caos
+    $mode = $random.Next(0, 100)
+
+    if ($mode -lt 40) {
+        # SCATTO VIOLENTO - movimenti grandi e rapidi
+        $dx = $random.Next(-300, 301)
+        $dy = $random.Next(-300, 301)
+        $newX = [Math]::Max(0, [Math]::Min($screenW, $pos.X + $dx))
+        $newY = [Math]::Max(0, [Math]::Min($screenH, $pos.Y + $dy))
+        [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($newX, $newY)
+    }
+    elseif ($mode -lt 55) {
+        # TELETRASPORTO - posizione completamente casuale sullo schermo
+        $newX = $random.Next(0, $screenW)
+        $newY = $random.Next(0, $screenH)
+        [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($newX, $newY)
+    }
+    elseif ($mode -lt 70) {
+        # TERREMOTO - vibrazioni rapidissime
+        for ($i = 0; $i -lt 15; $i++) {
+            $pos = [System.Windows.Forms.Cursor]::Position
+            $dx = $random.Next(-50, 51)
+            $dy = $random.Next(-50, 51)
+            $newX = [Math]::Max(0, [Math]::Min($screenW, $pos.X + $dx))
+            $newY = [Math]::Max(0, [Math]::Min($screenH, $pos.Y + $dy))
+            [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($newX, $newY)
+            Start-Sleep -Milliseconds 10
+        }
+    }
+    elseif ($mode -lt 82) {
+        # SPIRALE IMPAZZITA
+        $cx = $pos.X
+        $cy = $pos.Y
+        for ($i = 0; $i -lt 20; $i++) {
+            $angle = $i * 0.5
+            $radius = $i * 8
+            $newX = [int]($cx + [Math]::Cos($angle) * $radius)
+            $newY = [int]($cy + [Math]::Sin($angle) * $radius)
+            $newX = [Math]::Max(0, [Math]::Min($screenW, $newX))
+            $newY = [Math]::Max(0, [Math]::Min($screenH, $newY))
+            [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($newX, $newY)
+            Start-Sleep -Milliseconds 8
+        }
+    }
+    elseif ($mode -lt 92) {
+        # RIMBALZO ANGOLI - spara verso un angolo dello schermo
+        $corners = @(
+            (New-Object System.Drawing.Point(0, 0)),
+            (New-Object System.Drawing.Point($screenW, 0)),
+            (New-Object System.Drawing.Point(0, $screenH)),
+            (New-Object System.Drawing.Point($screenW, $screenH))
+        )
+        $target = $corners[$random.Next(0, 4)]
+        [System.Windows.Forms.Cursor]::Position = $target
+    }
+    else {
+        # RAFFICA - tanti micro-movimenti velocissimi
+        for ($i = 0; $i -lt 25; $i++) {
+            $pos = [System.Windows.Forms.Cursor]::Position
+            $dx = $random.Next(-150, 151)
+            $dy = $random.Next(-150, 151)
+            $newX = [Math]::Max(0, [Math]::Min($screenW, $pos.X + $dx))
+            $newY = [Math]::Max(0, [Math]::Min($screenH, $pos.Y + $dy))
+            [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($newX, $newY)
+            Start-Sleep -Milliseconds 5
+        }
+    }
+
+    # Pausa brevissima tra le azioni (quasi nulla)
+    Start-Sleep -Milliseconds $random.Next(5, 80)
+}
+
+Write-Host ""
+Write-Host "========================================" -ForegroundColor Green
+Write-Host "  Mouse liberato! Sei sopravvissuto!   " -ForegroundColor Green
+Write-Host "========================================" -ForegroundColor Green
+Write-Host ""
